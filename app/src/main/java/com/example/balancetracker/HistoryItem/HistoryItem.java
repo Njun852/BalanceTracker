@@ -1,14 +1,14 @@
-package com.example.balancetracker;
+package com.example.balancetracker.HistoryItem;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class HistoryItem {
     String name;
-    String type;
+    HistoryItemType type;
     int amount;
-    Date date;
+    LocalDateTime date;
 
-    public HistoryItem(String name, String type, int amount, Date date) {
+    public HistoryItem(String name, HistoryItemType type, int amount, LocalDateTime date) {
         this.name = name;
         this.type = type;
         this.amount = amount;
@@ -23,11 +23,11 @@ public class HistoryItem {
         this.name = name;
     }
 
-    public String getType() {
+    public HistoryItemType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(HistoryItemType type) {
         this.type = type;
     }
 
@@ -39,11 +39,12 @@ public class HistoryItem {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
+

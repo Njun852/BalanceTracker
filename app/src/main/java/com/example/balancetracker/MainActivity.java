@@ -11,16 +11,18 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.balancetracker.HistoryItem.HistoryItem;
+import com.example.balancetracker.HistoryItem.HistoryItemAdapter;
+import com.example.balancetracker.HistoryItem.HistoryItemType;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -91,14 +93,13 @@ public class MainActivity extends AppCompatActivity {
         lineChart.getLegend().setTextColor(Color.WHITE);
         lineChart.setBackgroundColor(Color.BLACK);
         lineChart.invalidate();
-
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<HistoryItem> items = new ArrayList<>();
-        items.add(new HistoryItem("Food", "Expense", 400, new Date()));
-        items.add(new HistoryItem("Monthly Salary", "Income", 5000, new Date()));
-        items.add(new HistoryItem("Wifi", "Expense", 1200, new Date()));
-        items.add(new HistoryItem("Repairs", "Expense", 700, new Date()));
+        items.add(new HistoryItem("Food", HistoryItemType.EXPENSE, 400, LocalDateTime.of(2026, 3, 4, 15, 12)));
+        items.add(new HistoryItem("Monthly Salary", HistoryItemType.INCOME, 5000, LocalDateTime.of(2026, 3, 4, 9, 12)));
+        items.add(new HistoryItem("Wifi", HistoryItemType.EXPENSE, 1200, LocalDateTime.of(2026, 3, 6, 10, 32)));
+        items.add(new HistoryItem("Repairs", HistoryItemType.EXPENSE, 700, LocalDateTime.of(2026, 3, 1, 12, 30)));
         recyclerView.setAdapter(new HistoryItemAdapter(getApplicationContext(), items));
     }
 }

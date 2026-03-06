@@ -1,12 +1,16 @@
-package com.example.balancetracker;
+package com.example.balancetracker.HistoryItem;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.balancetracker.R;
+
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHolder>{
@@ -26,10 +30,15 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
 
     @Override
     public void onBindViewHolder(@NonNull HistoryItemViewHolder holder, int position) {
+        //"#FD6161" -expense
         HistoryItem item = items.get(position);
+        holder.card.setCardBackgroundColor(Color.parseColor(item.getType() == HistoryItemType.INCOME ? "#61FD83" : "#FD6161"));
         holder.nameTxt.setText(item.name);
-        holder.subTxt.setText(item.type+" - "+item.date.toString());
-        holder.priceTxt.setText("₱"+item.amount);
+        char[] type = item.type.toString().toLowerCase().toCharArray();
+        type[0] = (type[0]+"").toUpperCase().charAt(0);
+
+        holder.subTxt.setText(new String(type)+" - "+item.date.format(DateTimeFormatter.ofPattern("MM/dd/yy")));
+        holder.priceTxt.setText(String.format("₱%,d", item.amount));
     }
 
     @Override
