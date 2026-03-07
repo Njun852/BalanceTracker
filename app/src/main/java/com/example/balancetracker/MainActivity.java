@@ -1,19 +1,24 @@
 package com.example.balancetracker;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.balancetracker.HistoryItem.HistoryItem;
 import com.example.balancetracker.HistoryItem.HistoryItemAdapter;
 import com.example.balancetracker.HistoryItem.HistoryItemType;
+import com.example.balancetracker.data.repository.ExpenseActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -27,6 +32,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    HistoryViewModel historyViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,11 +102,22 @@ public class MainActivity extends AppCompatActivity {
         lineChart.invalidate();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<HistoryItem> items = new ArrayList<>();
-        items.add(new HistoryItem("Food", HistoryItemType.EXPENSE, 400, LocalDateTime.of(2026, 3, 4, 15, 12)));
-        items.add(new HistoryItem("Monthly Salary", HistoryItemType.INCOME, 5000, LocalDateTime.of(2026, 3, 4, 9, 12)));
-        items.add(new HistoryItem("Wifi", HistoryItemType.EXPENSE, 1200, LocalDateTime.of(2026, 3, 6, 10, 32)));
-        items.add(new HistoryItem("Repairs", HistoryItemType.EXPENSE, 700, LocalDateTime.of(2026, 3, 1, 12, 30)));
-        recyclerView.setAdapter(new HistoryItemAdapter(getApplicationContext(), items));
+
+        historyViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+
+        historyViewModel.getHistoryItems().observe(this, state ->{
+            recyclerView.setAdapter(new HistoryItemAdapter(getApplicationContext(), state));
+        });
+
+        CardView incomeCVBtn = findViewById(R.id.incomeCVBtn);
+        CardView expenseCVBtn = findViewById(R.id.expenseCVBtn);
+        incomeCVBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, IncomeActivity.class);
+            startActivity(intent);
+        });
+        expenseCVBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ExpenseActivity.class);
+            startActivity(intent);
+        });
     }
 }
