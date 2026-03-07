@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BalanceTracker">
         <activity
-            android:name=".data.repository.ExpenseActivity"
+            android:name=".ExpenseActivity"
             android:exported="false" />
         <activity
             android:name=".IncomeActivity"

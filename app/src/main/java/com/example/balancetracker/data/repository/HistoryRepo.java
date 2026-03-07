@@ -15,10 +15,15 @@ public class HistoryRepo {
 
     private HistoryRepo() {
         historyItems.setValue(new ArrayList<>());
-        this.addHistoryItem(new HistoryItem("Food", HistoryItemType.EXPENSE, 400, LocalDateTime.of(2026, 3, 4, 15, 12)));
-        this.addHistoryItem(new HistoryItem("Monthly Salary", HistoryItemType.INCOME, 5000, LocalDateTime.of(2026, 3, 4, 9, 12)));
-        this.addHistoryItem(new HistoryItem("Wifi", HistoryItemType.EXPENSE, 1200, LocalDateTime.of(2026, 3, 6, 10, 32)));
-        this.addHistoryItem(new HistoryItem("Repairs", HistoryItemType.EXPENSE, 700, LocalDateTime.of(2026, 3, 1, 12, 30)));
+        this.addHistoryItem(new HistoryItem("Monthly Salary", HistoryItemType.INCOME, 5000, LocalDateTime.of(2026, 3, 1, 9, 0)));
+        this.addHistoryItem(new HistoryItem("Apartment Rent", HistoryItemType.EXPENSE, 1200, LocalDateTime.of(2026, 3, 1, 10, 30)));
+        this.addHistoryItem(new HistoryItem("Grocery Shopping", HistoryItemType.EXPENSE, 150, LocalDateTime.of(2026, 3, 2, 18, 15)));
+        this.addHistoryItem(new HistoryItem("Fuel Refill", HistoryItemType.EXPENSE, 60, LocalDateTime.of(2026, 3, 3, 8, 45)));
+        this.addHistoryItem(new HistoryItem("Freelance Bonus", HistoryItemType.INCOME, 450, LocalDateTime.of(2026, 3, 4, 14, 0)));
+        this.addHistoryItem(new HistoryItem("Starbucks Coffee", HistoryItemType.EXPENSE, 15, LocalDateTime.of(2026, 3, 4, 15, 30)));
+        this.addHistoryItem(new HistoryItem("Internet Bill", HistoryItemType.EXPENSE, 80, LocalDateTime.of(2026, 3, 5, 10, 0)));
+        this.addHistoryItem(new HistoryItem("Friday Night Pizza", HistoryItemType.EXPENSE, 45, LocalDateTime.of(2026, 3, 6, 20, 0)));
+        this.addHistoryItem(new HistoryItem("Gym Subscription", HistoryItemType.EXPENSE, 50, LocalDateTime.of(2026, 3, 7, 11, 20)));
     }
 
     public static synchronized HistoryRepo getInstance() {

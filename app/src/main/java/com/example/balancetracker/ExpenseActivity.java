@@ -1,4 +1,4 @@
-package com.example.balancetracker.data.repository;
+package com.example.balancetracker;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.balancetracker.HistoryItem.HistoryItem;
 import com.example.balancetracker.HistoryItem.HistoryItemType;
-import com.example.balancetracker.HistoryViewModel;
-import com.example.balancetracker.R;
 
 import java.time.LocalDateTime;
 
