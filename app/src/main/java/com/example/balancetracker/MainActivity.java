@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         lineChart = findViewById(R.id.lineChart);
         lineChart.getDescription().setEnabled(false);
 
-
         //date range
         String[] days = new String[7];
         LocalDateTime today = LocalDateTime.now();
@@ -98,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
         xAxis.setGranularity(1f);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setDrawGridLines(false);
-
-
 
         int totalBudget = 0;
         for(int i = 0; i < items.size(); i++) {

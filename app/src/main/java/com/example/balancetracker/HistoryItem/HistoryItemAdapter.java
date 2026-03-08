@@ -37,7 +37,7 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
         char[] type = item.type.toString().toLowerCase().toCharArray();
         type[0] = (type[0]+"").toUpperCase().charAt(0);
 
-        holder.subTxt.setText(new String(type)+" - "+item.date.format(DateTimeFormatter.ofPattern("MM/dd/yy")));
+        holder.subTxt.setText(new String(type)+" - "+item.date.format(DateTimeFormatter.ofPattern("MM/dd/yy, hh:mm a")));
         holder.priceTxt.setText(String.format("₱%,d", item.amount));
     }
 

@@ -1,34 +1,29 @@
 package com.example.balancetracker.data.repository;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.balancetracker.HistoryItem.HistoryItem;
-import com.example.balancetracker.HistoryItem.HistoryItemType;
+import com.example.balancetracker.data.local.DatabaseHelper;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class HistoryRepo {
     private static HistoryRepo instance;
+    private final DatabaseHelper dbHelper;
     private final MutableLiveData<ArrayList<HistoryItem>> historyItems = new MutableLiveData<>();
 
-    private HistoryRepo() {
+    private HistoryRepo(Context context) {
         historyItems.setValue(new ArrayList<>());
-        this.addHistoryItem(new HistoryItem("Monthly Salary", HistoryItemType.INCOME, 5000, LocalDateTime.of(2026, 3, 1, 9, 0)));
-        this.addHistoryItem(new HistoryItem("Apartment Rent", HistoryItemType.EXPENSE, 1200, LocalDateTime.of(2026, 3, 1, 10, 30)));
-        this.addHistoryItem(new HistoryItem("Grocery Shopping", HistoryItemType.EXPENSE, 150, LocalDateTime.of(2026, 3, 2, 18, 15)));
-        this.addHistoryItem(new HistoryItem("Fuel Refill", HistoryItemType.EXPENSE, 60, LocalDateTime.of(2026, 3, 3, 8, 45)));
-        this.addHistoryItem(new HistoryItem("Freelance Bonus", HistoryItemType.INCOME, 450, LocalDateTime.of(2026, 3, 4, 14, 0)));
-        this.addHistoryItem(new HistoryItem("Starbucks Coffee", HistoryItemType.EXPENSE, 15, LocalDateTime.of(2026, 3, 4, 15, 30)));
-        this.addHistoryItem(new HistoryItem("Internet Bill", HistoryItemType.EXPENSE, 80, LocalDateTime.of(2026, 3, 5, 10, 0)));
-        this.addHistoryItem(new HistoryItem("Friday Night Pizza", HistoryItemType.EXPENSE, 45, LocalDateTime.of(2026, 3, 6, 20, 0)));
-        this.addHistoryItem(new HistoryItem("Gym Subscription", HistoryItemType.EXPENSE, 50, LocalDateTime.of(2026, 3, 7, 11, 20)));
+        dbHelper = new DatabaseHelper(context);
+        loadDataFromDB();
     }
 
-    public static synchronized HistoryRepo getInstance() {
+    public static synchronized HistoryRepo getInstance(Context context) {
         if(instance == null) {
-            instance = new HistoryRepo();
+            instance = new HistoryRepo(context.getApplicationContext());
         }
         return instance;
     }
@@ -37,10 +32,18 @@ public class HistoryRepo {
         return historyItems;
     }
     public void addHistoryItem(HistoryItem item) {
-        ArrayList<HistoryItem> items = historyItems.getValue();
-        if(items != null) {
-            items.add(item);
-            historyItems.setValue(items);
-        }
+        new Thread(()->{
+            long id = dbHelper.insertHistory(item);
+            if(id != -1) {
+                loadDataFromDB();
+            }
+        }).start();
+    }
+
+    private void loadDataFromDB() {
+        new Thread(()->{
+            ArrayList<HistoryItem> items = dbHelper.getAllHistory();
+            historyItems.postValue(items);
+        }).start();
     }
 }
